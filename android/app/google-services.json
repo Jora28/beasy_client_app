@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "651611249967",
+    "project_id": "beasy-8f0f7",
+    "storage_bucket": "beasy-8f0f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:651611249967:android:0c668adb2ae056f19b95da",
+        "android_client_info": {
+          "package_name": "com.beasy.beasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "651611249967-r2v7tn88hfrftr5gr9arnt9tc1n4se0e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beasy.beasy",
+            "certificate_hash": "3b67b0120d6982232f43e4ebd132f66c12229ccc"
+          }
+        },
+        {
+          "client_id": "651611249967-bvsgm5nssppoajpvgq14124e9ai5qu97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7jEil8CDUWakWHE3KX4rOxfmZJBek13A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "651611249967-bvsgm5nssppoajpvgq14124e9ai5qu97.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:651611249967:android:f0fe1b3a1a9af6309b95da",
+        "android_client_info": {
+          "package_name": "com.example.beasy_client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "651611249967-bvsgm5nssppoajpvgq14124e9ai5qu97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7jEil8CDUWakWHE3KX4rOxfmZJBek13A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "651611249967-bvsgm5nssppoajpvgq14124e9ai5qu97.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:651611249967:android:43d28ce2e6615c4a9b95da",
+        "android_client_info": {
+          "package_name": "com.example.beasy_company"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "651611249967-bvsgm5nssppoajpvgq14124e9ai5qu97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7jEil8CDUWakWHE3KX4rOxfmZJBek13A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "651611249967-bvsgm5nssppoajpvgq14124e9ai5qu97.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
