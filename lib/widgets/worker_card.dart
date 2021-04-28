@@ -71,21 +71,24 @@ class _WorkerCardState extends State<WorkerCard> {
                           ),
                         ),
                       ),
-                      RatingBar.builder(
-                        updateOnDrag: false,
-                        itemSize: 15,
-                        initialRating: 3,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Colors.amber,
+                      AbsorbPointer(
+                        absorbing: true,
+                        child: RatingBar.builder(
+                          updateOnDrag: false,
+                          itemSize: 15,
+                          initialRating: 3,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
                         ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
                       ),
                     ],
                   ),
