@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class WorkerCard extends StatefulWidget {
-  CompanyStream companyStream;
+  final CompanyStream companyStream;
+  final String companyId;
+  final Company company;
 
-  WorkerCard({this.companyStream});
+  WorkerCard({this.companyStream, this.companyId, this.company});
 
   @override
   _WorkerCardState createState() => _WorkerCardState();
@@ -23,8 +25,12 @@ class _WorkerCardState extends State<WorkerCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (contex) => WorkerInfoPage()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (contex) => WorkerInfoPage(
+                  companyStream: widget.companyStream,
+                  companyId: widget.companyId,
+                  company: widget.company,
+                )));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),

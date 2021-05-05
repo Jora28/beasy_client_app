@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.16.0
   firebase_core: ^0.7.0   
   firebase_auth: ^0.20.1
   cloud_firestore: ^0.16.0
@@ -32,6 +33,12 @@ dependencies:
   auto_size_text: ^2.1.0
   carousel_slider: ^3.0.0
   flutter_rating_bar: ^4.0.0
+  fluttertoast: ^7.1.8
+  keyboard_dismisser: ^2.0.0
+  shared_preferences: ^2.0.5
+
+
+
 
 
 

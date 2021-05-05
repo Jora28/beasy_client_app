@@ -10,7 +10,6 @@ class CustumButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
       width: double.infinity,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(

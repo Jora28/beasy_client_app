@@ -1,4 +1,3 @@
-
 import 'package:beasy_client/models/company_model/company.dart';
 import 'package:beasy_client/models/company_model/company_stream.dart';
 import 'package:beasy_client/models/company_model/stream_queue_item.dart';
@@ -180,6 +179,8 @@ class CompanyServices {
       for (int i = 0; i < streams.docs.length; i++) {
         var element = streams.docs[i];
         var stream = CompanyStream.fromJson(element);
+        curentUserCompany.companyStreams.add(stream);
+
         var streamQueues = await store
             .collection(companiesCollectionPath)
             .doc(curentUserCompany.companyOwnerId)
@@ -187,14 +188,12 @@ class CompanyServices {
             .doc(stream.companyStreamId)
             .collection(streamQueuePath)
             .get();
-        streamQueues.docs.forEach((e) {
+        for (int i = 0; i < streamQueues.docs.length; i++) {
+          var e = streamQueues.docs[i];
           stream.queue.add(StreamQueueItem.fromJson(e));
-        });
-        curentUserCompany.companyStreams.add(
-          stream,
-        );
-        return curentUserCompany;
+        }
       }
+      return curentUserCompany;
     } catch (e) {
       print(e.toString());
       return null;
@@ -213,13 +212,34 @@ class CompanyServices {
           .collection("streamQueuePath")
           .get();
 
+      var open =
+          await store.collection(companiesCollectionPath).doc(compmayId).get();
+
+      var data = open.data();
+      var company = Company.fromJson(data);
+
+      print("${company.startTime.hour}:${company.startTime.minute}");
+      print("${company.endTime.hour}:${company.endTime.minute}");
+      print("=========================");
+
       allQueues.docs.forEach((element) {
         castedQueues.add(StreamQueueItem.fromJson(element));
       });
 
       var isAvailableQueus = true;
+
+      if (queueItem.startTime.hour > company.startTime.hour &&
+          queueItem.startTime.hour < company.endTime.hour) {
+      } else {
+        print("work this");
+        isAvailableQueus = false;
+      }
       for (int i = 0; i < castedQueues.length; i++) {
         var curent = castedQueues[i];
+
+        if (queueItem.startTime == curent.startTime) {
+          isAvailableQueus = false;
+        }
         if (queueItem.startTime.isAfter(curent.startTime) &&
             queueItem.startTime.isBefore(curent.endTime)) {
           isAvailableQueus = false;
@@ -229,12 +249,12 @@ class CompanyServices {
           isAvailableQueus = false;
         }
       }
-      print("is queue available${isAvailableQueus}");
+      print("is queue available$isAvailableQueus");
 
-      if (isAvailableQueus) {
+      if (isAvailableQueus == true) {
         var l = allQueues.docs.length;
 
-        var streamQueues = await store
+        await store
             .collection(companiesCollectionPath)
             .doc(compmayId)
             .collection(companyStreamsPath)
@@ -243,10 +263,28 @@ class CompanyServices {
             .doc(l.toString())
             .set(queueItem.toJson());
       }
-      return true;
+      return isAvailableQueus;
     } catch (e) {
       print(e.toString());
       return false;
     }
+  }
+
+  Future<List<StreamQueueItem>> getAvailibaleTime(
+      {String compmayId, String streamId}) async {
+    List<StreamQueueItem> list = [];
+    var a = await store
+        .collection(companiesCollectionPath)
+        .doc(compmayId)
+        .collection(companyStreamsPath)
+        .doc(streamId)
+        .collection("streamQueuePath")
+        .orderBy("endTime", descending: false)
+        .get();
+    for (int i = 0; i < a.docs.length; i++) {
+      var e = a.docs[i];
+      list.add(StreamQueueItem.fromJson(e));
+    }
+    return list;
   }
 }

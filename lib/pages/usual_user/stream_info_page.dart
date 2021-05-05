@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:beasy_client/models/company_model/company.dart';
 import 'package:beasy_client/utils/style_color.dart';
-import 'package:beasy_client/widgets/image_slider.dart';
 import 'package:beasy_client/widgets/worker_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +15,13 @@ class StreamInfo extends StatefulWidget {
 
 class _StreamInfoState extends State<StreamInfo> {
   bool isFaforite = false;
+  @override
+  void initState() {
+    var list = widget.company.companyStreams;
+    print(list);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,7 +77,7 @@ class _StreamInfoState extends State<StreamInfo> {
             textAlign: TextAlign.start,
           ),
         ),
-                Container(
+        Container(
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.only(
               left: 30,
@@ -85,8 +91,7 @@ class _StreamInfoState extends State<StreamInfo> {
         ),
         Container(
           decoration: BoxDecoration(
-            border: Border(top: BorderSide(color: Colors.grey,width: 0.5))
-          ),
+              border: Border(top: BorderSide(color: Colors.grey, width: 0.5))),
           margin:
               EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.48),
           child: ListView.builder(
@@ -95,6 +100,8 @@ class _StreamInfoState extends State<StreamInfo> {
               itemBuilder: (context, index) {
                 return WorkerCard(
                   companyStream: widget.company.companyStreams[index],
+                  companyId: widget.company.companyOwnerId,
+                  company: widget.company,
                 );
               }),
         ),

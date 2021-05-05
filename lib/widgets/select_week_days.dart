@@ -23,10 +23,13 @@ class WeekDays extends StatefulWidget {
   final BoxDecoration boxDecoration;
 // [padding] property  to handle the padding between the container and buttons by default it is 8.0
   final double padding;
+  List<DayInWeek> days;
+
   WeekDays({
     @required this.onSelect,
     this.backgroundColor,
     this.daysFillColor,
+    this.days,
     this.daysBorderColor,
     this.selectedDayTextColor,
     this.unSelectedDayTextColor,
@@ -46,30 +49,31 @@ class _SelectWeekDaysState extends State<WeekDays> {
   List<String> selectedDays = [];
 
   // list of days in a week.
-  List<DayInWeek> _days = [
-    DayInWeek(
-      "Sunday",
-    ),
-    DayInWeek(
-      "Monday",
-    ),
-    DayInWeek(
-      "Tuesday",
-    ),
-    DayInWeek(
-      "Wednesday",
-    ),
-    DayInWeek(
-      "Thursday",
-    ),
-    DayInWeek(
-      "Friday",
-    ),
-    DayInWeek(
-      "Saturday",
-    ),
-  ];
+  // List<DayInWeek> _days = [
+  //   // DayInWeek(
+  //   //   "Sunday",
+  //   // ),
+  //   // DayInWeek(
+  //   //   "Monday",
+  //   // ),
+  //   // DayInWeek(
+  //   //   "Tuesday",
+  //   // ),
+  //   // DayInWeek(
+  //   //   "Wednesday",
+  //   // ),
+  //   // DayInWeek(
+  //   //   "Thursday",
+  //   // ),
+  //   // DayInWeek(
+  //   //   "Friday",
+  //   // ),
+  //   // DayInWeek(
+  //   //   "Saturday",
+  //   // ),
+  // ];
 
+ 
   void _getSelectedWeekDays(bool isSelected, String day) {
     if (isSelected == true) {
       if (!selectedDays.contains(day)) {
@@ -146,7 +150,7 @@ class _SelectWeekDaysState extends State<WeekDays> {
         padding: EdgeInsets.all(widget.padding),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: _days.map(
+          children: widget.days.map(
             (day) {
               return Expanded(
                 child: RawMaterialButton(
@@ -167,11 +171,11 @@ class _SelectWeekDaysState extends State<WeekDays> {
                     _getSelectedWeekDays(day.isSelected, day.dayName);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(1),
                     child: Text(
-                      day.dayName.substring(0, 3),
+                      day.dayName,
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 15,
                         fontWeight: FontWeight.normal,
                         color: _handleTextColor(day.isSelected),
                       ),

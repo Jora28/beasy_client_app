@@ -1,6 +1,7 @@
 import 'package:beasy_client/models/user_models/user.dart';
 import 'package:beasy_client/services/beasyApi.dart';
 import 'package:beasy_client/utils/helpers.dart';
+import 'package:beasy_client/utils/sharedpreferences.dart';
 import 'package:beasy_client/utils/style_color.dart';
 import 'package:beasy_client/widgets/buttons.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   margin: EdgeInsets.symmetric(horizontal: 10),
                 ),
                 Container(
-                    child: Text(user.name + " " + user.surname,
+                    child: Text(user.name??"Jora" + " " + user.surname??"helll",
                         style: TextStyle(color: Colors.white, fontSize: 16)))
               ],
             )),
@@ -118,6 +119,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               onTap: () async {
                 var singOut = await BeasyApi().profileServices.singOut();
                 if (singOut) {
+                  SaveUserData.saveLogged(false);
                   Navigator.of(context).popAndPushNamed(OnBoard.routeName);
                 }
               },

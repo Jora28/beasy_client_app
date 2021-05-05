@@ -1,10 +1,16 @@
+import 'package:beasy_client/models/company_model/company.dart';
+import 'package:beasy_client/models/company_model/company_stream.dart';
+import 'package:beasy_client/pages/usual_user/book_page.dart';
 import 'package:beasy_client/utils/style_color.dart';
 import 'package:beasy_client/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 
 class WorkerInfoPage extends StatefulWidget {
   static final routeName = 'WorkerInfoPage';
-  WorkerInfoPage({Key key}) : super(key: key);
+  final CompanyStream companyStream;
+  final String companyId;
+  final Company company;
+  WorkerInfoPage({this.companyStream, this.companyId, this.company});
 
   @override
   _WorkerInfoPageState createState() => _WorkerInfoPageState();
@@ -22,12 +28,9 @@ class _WorkerInfoPageState extends State<WorkerInfoPage> {
     return Stack(
       children: [
         Flexible(
-         // flex: 2,
-         // height: MediaQuery.of(context).size.height * 0.88,
           child: ListView(
-            padding: EdgeInsets.only(bottom:70),
+            padding: EdgeInsets.only(bottom: 100),
             shrinkWrap: true,
-            //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
                 children: [
@@ -44,7 +47,7 @@ class _WorkerInfoPageState extends State<WorkerInfoPage> {
               ),
               Container(
                 margin: EdgeInsets.only(left: 15, top: 15, bottom: 15),
-                child: Text("Tomas Shelby",
+                child: Text(widget.companyStream.streamName,
                     style: TextStyle(
                         color: newColor4,
                         fontSize: 25,
@@ -52,7 +55,7 @@ class _WorkerInfoPageState extends State<WorkerInfoPage> {
               ),
               Container(
                 margin: EdgeInsets.only(left: 15),
-                child: Text("Specialic Automecanic",
+                child: Text(widget.companyStream.streamServices[0].serviceName,
                     style: TextStyle(
                         color: newColor4.withOpacity(0.7),
                         fontSize: 18,
@@ -105,17 +108,7 @@ class _WorkerInfoPageState extends State<WorkerInfoPage> {
               ),
               Container(
                 margin: EdgeInsets.only(left: 15),
-                child: Text(
-                    "A simple yet fully customizable ratingbar for flutter which also include a rating bar indicator, supporting any fraction of rating.",
-                    style: TextStyle(
-                        color: newColor4.withOpacity(0.7),
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal)),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 15),
-                child: Text(
-                    "A simple yet fully customizable ratingbar for flutter which also include a rating bar indicator, supporting any fraction of rating.",
+                child: Text(widget.companyStream.streamDescription,
                     style: TextStyle(
                         color: newColor4.withOpacity(0.7),
                         fontSize: 18,
@@ -124,22 +117,31 @@ class _WorkerInfoPageState extends State<WorkerInfoPage> {
             ],
           ),
         ),
-        Flexible(
-                  child: Align(
-            alignment: Alignment.bottomCenter,
-            child: InkWell(
-              onTap: () {},
-              child: Container(
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(offset: Offset(1,1),color: Colors.black,blurRadius: 5)
-                      ],
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20))),
-                child: CustumButton(text: "Book an Appointment", onTap: () {}),
-              ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: 80,
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(1, 1), color: Colors.black, blurRadius: 5)
+                ],
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: CustumButton(
+                  text: "Book an Appointment",
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => BookPage(
+                              companyStream: widget.companyStream,
+                              companyOwnerId: widget.companyId,
+                              company: widget.company,
+                            )));
+                  }),
             ),
           ),
         ),
@@ -148,14 +150,13 @@ class _WorkerInfoPageState extends State<WorkerInfoPage> {
             icon: Icon(
               Icons.arrow_back,
               color: Colors.white,
-              size: 30,
             ),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          top: 40,
-          left: 20,
+          top: 30,
+          left: 10,
         )
       ],
     );

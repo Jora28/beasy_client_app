@@ -1,4 +1,6 @@
 import 'package:beasy_client/models/company_model/company.dart';
+import 'package:beasy_client/models/company_model/company_stream.dart';
+import 'package:beasy_client/models/user_models/user.dart';
 import 'package:beasy_client/services/beasyApi.dart';
 import 'package:beasy_client/widgets/inpurs.dart';
 import 'package:beasy_client/widgets/stream_card.dart';
@@ -18,7 +20,9 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
   bool showOnlyFavorite = false;
   bool showAll = true;
   List<Company> allCompanies = [];
+  User user = User();
   String _selectedtItem = 'All';
+  List<CompanyStream> listStreams = [];
   List<String> category = [
     'All',
     'Sport',
@@ -33,12 +37,20 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
       isLaoding = true;
     });
 
+    var resUser = await BeasyApi().profileServices.getUserData();
+
     var res = await BeasyApi().companyServices.getAllCompanyes();
     if (res != null) {
-      if(mounted)
-      setState(() {
-        allCompanies = res;
-      });
+      if (mounted)
+        setState(() {
+          allCompanies = res;
+          user = resUser;
+        });
+      // for (int i = 0; i < allCompanies.length; i++) {
+      //   for(int j = 0;j<allCompanies[i].companyStreams.length;j++){
+      //     print(allCompanies[i].companyStreams[j].streamName);
+      //   }
+      // }
     }
     setState(() {
       isLaoding = false;
@@ -48,7 +60,6 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
   @override
   void initState() {
     getCompanyes();
-    print(allCompanies);
     super.initState();
   }
 
@@ -75,7 +86,6 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
       borderRadius: BorderRadius.circular(15),
       onTap: () {
         selectedItem(name);
-        print(name);
       },
       child: Container(
         alignment: Alignment.center,
@@ -97,7 +107,7 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
               ]),
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey,width: 0.3),
+            border: Border.all(color: Colors.grey, width: 0.3),
             color: _selectedtItem == name ? newColor4 : Colors.white,
             borderRadius: BorderRadius.circular(15)),
       ),
@@ -128,7 +138,7 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
                               EdgeInsets.only(left: 10, right: 10, top: 10),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Good Morning,Jora",
+                            "Good Morning,${user.name}",
                             style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                         ),
@@ -144,7 +154,10 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
                 Container(
                   margin: EdgeInsets.only(left: 30, right: 30, top: 140),
                   child: Text("Categories",
-                      style: TextStyle(color: newColor4, fontSize: 18,)),
+                      style: TextStyle(
+                        color: newColor4,
+                        fontSize: 18,
+                      )),
                 ),
                 Container(
                   height: 250,
@@ -167,7 +180,7 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
                 Container(
                   margin: EdgeInsets.only(left: 30, right: 30, top: 430),
                   child: Text("Companies",
-                      style: TextStyle(color: newColor4,fontSize: 18)),
+                      style: TextStyle(color: newColor4, fontSize: 18)),
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 460),
