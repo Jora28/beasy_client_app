@@ -36,25 +36,15 @@ class _SingInPageState extends State<SingInPage> {
     });
     if (res == false) {
       print(res);
-      Fluttertoast.showToast(
-        msg: "'Can't Sing in. Please check your email/password",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey.withOpacity(0.5),
-        textColor: Colors.white,
-        fontSize: 16,
-      );
+      showToast(text: " Can't Sing in. Please check your email/password");
     }
-
-
 
     if (res) {
       var a = await BeasyApi().profileServices.getUserData();
       SaveUserData.saveLogged(true);
       SaveUserData.saveUserCurrentId(a.id);
-      if (BeasyApi().profileServices.user.userType == UserType.UsualUser) {
-        Navigator.of(context).pushReplacementNamed(HomePageUser.routeName);
+      if (BeasyApi().profileServices.user.userType == UserType.CompanyOwner) {
+       showToast(text:"This accaunt is using Company Owner");
       } else {
         Navigator.of(context).pushReplacementNamed(HomePageUser.routeName);
       }
@@ -64,6 +54,7 @@ class _SingInPageState extends State<SingInPage> {
       isloading = false;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Stack(

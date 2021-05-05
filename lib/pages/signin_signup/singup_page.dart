@@ -44,10 +44,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
     await BeasyApi().profileServices.postUser(user);
 
-    if (BeasyApi().profileServices.user.userType == UserType.CompanyOwner) {
+    if (BeasyApi().profileServices.user.userType == UserType.UsualUser) {
       Navigator.of(context).pushNamed(HomePageUser.routeName);
     } else {
-      print("usual user");
+      showToast(text:"Error");
     }
   }
 

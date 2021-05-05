@@ -1,14 +1,10 @@
 import 'package:beasy_client/models/company_model/company.dart';
 import 'package:beasy_client/models/company_model/company_stream.dart';
 import 'package:beasy_client/models/company_model/stream_queue_item.dart';
-import 'package:beasy_client/pages/usual_user/worker_info_page.dart';
 import 'package:beasy_client/services/beasyApi.dart';
 import 'package:beasy_client/utils/helpers.dart';
 import 'package:beasy_client/utils/style_color.dart';
 import 'package:beasy_client/widgets/buttons.dart';
-import 'package:beasy_client/widgets/dialog.dart';
-import 'package:beasy_client/widgets/inpurs.dart';
-import 'package:day_picker/model/day_in_week.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -31,6 +27,7 @@ class _BookPageState extends State<BookPage> {
   List<WeekDay> workDays = [];
   int selectedtItemInShowDialog = 0;
   var selectedtItem;
+  DateTime dateOfTime;
   DateTime _selectedTimeStart = DateTime.now();
   DateTime curentTime = DateTime.now();
   TimeOfDay time;
@@ -228,7 +225,7 @@ class _BookPageState extends State<BookPage> {
                   onTap: () async {
                     print(widget.companyOwnerId);
                     if (time != null) {
-                      var dateOfTime = timeOfDaytoDate(time);
+                      dateOfTime = timeOfDaytoDate(time);
 
                       var isAvailibaleQueue =
                           await BeasyApi().companyServices.bookAStream(
@@ -255,15 +252,7 @@ class _BookPageState extends State<BookPage> {
                             text: "Please select availibale time");
                       }
                     } else {
-                      Fluttertoast.showToast(
-                        msg: "Please select time",
-                        toastLength: Toast.LENGTH_LONG,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.grey,
-                        textColor: Colors.white,
-                        fontSize: 16,
-                      );
+                      showToast(text:"Please select time");
                     }
                   }),
             ),
@@ -299,9 +288,7 @@ class _BookPageState extends State<BookPage> {
 
       if (endTime.hour != widget.company.endTime.hour) {
         availibalTime.add(a);
-        lastTime = endTime.add(Duration(
-          minutes: widget.companyStream.streamServices[0].durationInMinutes,
-        ));
+        lastTime = endTime.add(Duration(minutes: 10));
         endTime = lastTime.add(Duration(
           minutes: widget.companyStream.streamServices[0].durationInMinutes,
         ));
@@ -353,8 +340,15 @@ class _BookPageState extends State<BookPage> {
                     shrinkWrap: true,
                     itemCount: availibalTime.length,
                     itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {},
+                      return InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        onTap: () {
+                          var date = timeOfDaytoDate(time);
+                          date = availibalTime[index].startTime;
+                          setState(() {
+                            _selectedTimeStart = date;
+                          });
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
@@ -396,6 +390,7 @@ class _BookPageState extends State<BookPage> {
     );
 
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return alert;

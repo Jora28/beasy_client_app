@@ -3,6 +3,7 @@ import 'package:beasy_client/models/company_model/company_stream.dart';
 import 'package:beasy_client/models/user_models/user.dart';
 import 'package:beasy_client/services/beasyApi.dart';
 import 'package:beasy_client/widgets/inpurs.dart';
+import 'package:beasy_client/widgets/sliverbar.dart';
 import 'package:beasy_client/widgets/stream_card.dart';
 import 'package:flutter/material.dart';
 
@@ -65,14 +66,35 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: newColor4,
-      child: SafeArea(
-        child: Scaffold(
-          body: _body(),
-        ),
-      ),
-    );
+    bool _pinned = true;
+    bool _snap = false;
+    bool _floating = false;
+    return Scaffold(
+        body: NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return [
+          SliverAppBar(
+              title: Text(
+                "Good Morning,${user.name ?? ""}",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(30),
+                ),
+              ),
+              backgroundColor: newColor4,
+              pinned: _pinned,
+              snap: _snap,
+              floating: _floating,
+              expandedHeight: 120.0,
+              flexibleSpace: FlexibleSpaceBar(
+                background: AppBarSliver(),
+              )),
+        ];
+      },
+      body: _body(),
+    ));
   }
 
   selectedItem(cardTitele) {
@@ -123,36 +145,7 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
             child: Stack(
               children: [
                 Container(
-                  height: 130,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30)),
-                      color: newColor4),
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding:
-                              EdgeInsets.only(left: 10, right: 10, top: 10),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Good Morning,${user.name}",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                        ),
-                        Container(
-                            child: CustomInput(
-                                prefix: Icons.search,
-                                hintText: "Search",
-                                obscureText: false)),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 30, right: 30, top: 140),
+                  margin: EdgeInsets.only(left: 30, right: 30, top: 20),
                   child: Text("Categories",
                       style: TextStyle(
                         color: newColor4,
@@ -161,7 +154,7 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
                 ),
                 Container(
                   height: 250,
-                  margin: EdgeInsets.only(top: 180, left: 20, right: 20),
+                  margin: EdgeInsets.only(top: 40, left: 20, right: 20),
                   child: GridView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -178,12 +171,12 @@ class _SearchQueuePageState extends State<SearchQueuePage> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 30, right: 30, top: 430),
+                  margin: EdgeInsets.only(left: 30, right: 30, top: 300),
                   child: Text("Companies",
                       style: TextStyle(color: newColor4, fontSize: 18)),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 460),
+                  margin: EdgeInsets.only(top: 310),
                   child: ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
