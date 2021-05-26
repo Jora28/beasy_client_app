@@ -1,5 +1,7 @@
+import 'package:animations/animations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:beasy_client/models/company_model/company.dart';
+import 'package:beasy_client/pages/usual_user/worker_info_page.dart';
 import 'package:beasy_client/utils/style_color.dart';
 import 'package:beasy_client/widgets/worker_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -98,10 +100,21 @@ class _StreamInfoState extends State<StreamInfo> {
               shrinkWrap: true,
               itemCount: widget.company.companyStreams.length,
               itemBuilder: (context, index) {
-                return WorkerCard(
-                  companyStream: widget.company.companyStreams[index],
-                  companyId: widget.company.companyOwnerId,
-                  company: widget.company,
+                return OpenContainer(
+                  transitionType: ContainerTransitionType.fadeThrough,
+                  transitionDuration: Duration(seconds: 1),
+                  openBuilder: (contex, _) => WorkerInfoPage(
+                    companyStream: widget.company.companyStreams[index],
+                    companyId: widget.company.companyOwnerId,
+                    company: widget.company,
+                  ),
+                  closedBuilder: (context, VoidCallback voidCallback) =>
+                      WorkerCard(
+                    onTap: voidCallback,
+                    companyStream: widget.company.companyStreams[index],
+                    companyId: widget.company.companyOwnerId,
+                    company: widget.company,
+                  ),
                 );
               }),
         ),

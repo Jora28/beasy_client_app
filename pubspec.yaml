@@ -36,6 +36,8 @@ dependencies:
   fluttertoast: ^7.1.8
   keyboard_dismisser: ^2.0.0
   shared_preferences: ^2.0.5
+  animations: ^2.0.0
+
 
 
 

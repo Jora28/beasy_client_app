@@ -10,8 +10,9 @@ class WorkerCard extends StatefulWidget {
   final CompanyStream companyStream;
   final String companyId;
   final Company company;
+  final Function onTap;
 
-  WorkerCard({this.companyStream, this.companyId, this.company});
+  WorkerCard({this.companyStream, this.companyId, this.company,this.onTap});
 
   @override
   _WorkerCardState createState() => _WorkerCardState();
@@ -24,14 +25,7 @@ class _WorkerCardState extends State<WorkerCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (contex) => WorkerInfoPage(
-                  companyStream: widget.companyStream,
-                  companyId: widget.companyId,
-                  company: widget.company,
-                )));
-      },
+      onTap: widget.onTap,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         decoration: BoxDecoration(

@@ -38,7 +38,9 @@ class _WorkerInfoPageState extends State<WorkerInfoPage> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.5,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20)),
                         image: DecorationImage(
                             image: AssetImage('assets/user_photo.jpg'),
                             fit: BoxFit.cover)),
